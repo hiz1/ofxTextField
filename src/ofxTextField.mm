@@ -6,7 +6,7 @@
 ///--------------------------------------------------------------------------
 ///--------------------------------------------------------------------------
 
-
+#include "ofxTextField.h"
 
 #ifdef TARGET_OSX
 
@@ -98,7 +98,7 @@ extern "C" AXError _AXUIElementGetWindow(AXUIElementRef, CGWindowID* out);
 
 
 
-void ofTextField::create(int x, int y,int w,int h){
+void ofxTextField::create(int x, int y,int w,int h){
 #ifdef TARGET_WIN32
     memset(&wc, 0, sizeof(wc));
     int OF_CENTER_POSX_ = 0;
@@ -297,8 +297,8 @@ void ofTextField::create(int x, int y,int w,int h){
 #endif
     
 }
-ofTextField::ofTextField(){
-    TextDirection_ = ofTextField_Alling_LEFT;
+ofxTextField::ofxTextField(){
+    TextDirection_ = ofxTextField_Alling_LEFT;
     isCreated = false;
     posX=0,posY=0,width=0,height=0;
     showingScrolBar=false;
@@ -311,7 +311,7 @@ ofTextField::ofTextField(){
 #endif
     
 }
-ofTextField::  ~ofTextField(){
+ofxTextField::  ~ofxTextField(){
     if(isCreated){
 #ifdef TARGET_WIN32
         DestroyWindow(hEdit);
@@ -331,7 +331,7 @@ ofTextField::  ~ofTextField(){
     
 }
 
-bool ofTextField::activeApp(){
+bool ofxTextField::activeApp(){
     bool isactive=false;
 #ifdef TARGET_OSX
     
@@ -369,7 +369,7 @@ bool ofTextField::activeApp(){
 }
 
 
-bool ofTextField::isActive(){
+bool ofxTextField::isActive(){
     bool isTextboxActive =false;
 #ifdef TARGET_WIN32
     TRACKMOUSEEVENT mouseOverTextbox;
@@ -384,7 +384,7 @@ bool ofTextField::isActive(){
 }
 
 
-void ofTextField::draw(int x, int y,int w,int h){
+void ofxTextField::draw(int x, int y,int w,int h){
     if(!isCreated){
         create(x,y,w,h);
         isCreated=true;
@@ -428,7 +428,7 @@ void ofTextField::draw(int x, int y,int w,int h){
     
 }
 
-string ofTextField::getText(){
+std::string ofxTextField::getText(){
     if(isCreated){
 #ifdef TARGET_WIN32
         wchar_t wstr[16384];
@@ -450,7 +450,7 @@ string ofTextField::getText(){
     return text;
     
 }
-bool ofTextField::showScrollBar(bool showing){
+bool ofxTextField::showScrollBar(bool showing){
 #ifdef TARGET_WIN32
     ShowScrollBar(hEdit,101,showingScrolBar);
 #endif
@@ -459,7 +459,7 @@ bool ofTextField::showScrollBar(bool showing){
     
     
 }
-bool ofTextField::setMultiline(bool multln){
+bool ofxTextField::setMultiline(bool multln){
     showScrollBar(multln);
     
     
@@ -467,7 +467,7 @@ bool ofTextField::setMultiline(bool multln){
     return isMultiline;
 }
 
-void ofTextField::hide()
+void ofxTextField::hide()
 {       if(!isHiding&&isCreated){
 #ifdef TARGET_WIN32
     
@@ -492,10 +492,10 @@ void ofTextField::hide()
     
 }
 }
-bool ofTextField::getIsHiding(){
+bool ofxTextField::getIsHiding(){
     return isHiding;
 }
-void ofTextField::show()
+void ofxTextField::show()
 {
     
     if(isHiding&&isCreated){
@@ -524,13 +524,13 @@ void ofTextField::show()
     
     
 }
-bool ofTextField::setPassWordMode(bool passwrdmd ){
+bool ofxTextField::setPassWordMode(bool passwrdmd ){
     
     isPassword= passwrdmd;
     
     return isPassword;
 }
-void ofTextField::setText(string dtext){
+void ofxTextField::setText(std::string dtext){
     if(isCreated){
 #ifdef TARGET_WIN32
         
@@ -555,17 +555,17 @@ void ofTextField::setText(string dtext){
     
     
 }
-void ofTextField::setTextDir(ofTextField_Allingment direction){
+void ofxTextField::setTextDir(ofxTextField_Allingment direction){
     if(!isCreated){
         TextDirection_ = direction;
-    }else cout<<"ofTField::Allingment Should Be called on Setup"<<endl;
+    }else std::cout<<"ofTField::Allingment Should Be called on Setup"<<std::endl;
 }
 
 ///this is the weird part of the code
 //since this textbox is drawing above openGL
 //you might want to use this function to figure out
 //how to hide it when you don't want it.
-void ofTextField::hideIfNotDrawing(){
+void ofxTextField::hideIfNotDrawing(){
 #ifdef TARGET_WIN32
     
     if(!isDrawing)hide();
